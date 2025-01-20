@@ -20,10 +20,6 @@
       }
 
       .slide h2 {
-        &::first-letter {
-          text-transform: uppercase;
-        }
-
         &.shout {
           font-size: 120px;
           text-wrap: balance;
@@ -207,9 +203,6 @@ type Kilometers = number & {
         class="font-size-20"
       ><code class="hljs language-typescript">type Kilometers = number & { [kilometersBrand]: never };
 type Meters = number & { [metersBrand]: never };
-
-declare const lengthBrand: unique symbol;
-declare const radiusBrand: unique symbol;
 
 const kilometersToMeters = (value: Kilometers) => value * 1000;
 const metersToKilometers = (value: Meters) => value / 1000;</code></pre>
@@ -563,7 +556,7 @@ type NotFreePackageUserInfo = Extract&lt;UserInfo, { package_name: 'pro' | 'prim
     </section>
 
     <section class="slide">
-      <h2>запрос</h2>
+      <h2>Запрос</h2>
       <pre
         class="font-size-20"
       ><code class="hljs language-typescript" data-highlighted="yes"><mark><span class="hljs-keyword">type</span> <span class="hljs-title class_">AnyString</span> = <span class="hljs-built_in">string</span> &amp; {};</mark>
@@ -622,7 +615,11 @@ type NotFreePackageUserInfo = Extract&lt;UserInfo, { package_name: 'pro' | 'prim
     </section>
 
     <section class="slide">
-      <h2 class="shout">Как извлечь элемент из &nbsp;union&rsquo;а?</h2>
+      <h2 class="shout">Как извлечь элемент из&nbsp;union&rsquo;а?</h2>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">Возвращаемое значение перегруженной функции</h2>
     </section>
 
     <section class="slide">
@@ -810,20 +807,32 @@ const packagesList: UnionToTuple&lt;PackageName> = ['free', 'prime', 'pro'];
 
     <section class="slide">
       <h2>Запрос</h2>
-      <pre class="font-size-22">
-        <code data-highlighted="yes" class="hljs language-typescript"><span class="hljs-keyword">type</span> <span class="hljs-title class_">UserInfo</span> = {</code>
-        <code data-highlighted="yes" class="hljs language-typescript">  <span class="hljs-attr">id</span>: <span class="hljs-title class_">UserId</span>;</code>
-        <code data-highlighted="yes" class="hljs language-typescript">  <span class="hljs-attr">package_name</span>: <span class="hljs-built_in">string</span>;</code>
-        <code data-highlighted="yes" class="hljs language-typescript">};</code><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">const</span> <span class="hljs-title function_">requestUserInfo</span> = (<span class="hljs-attr">id</span>: <span class="hljs-title class_">UserId</span>): <mark><span class="hljs-title class_">SnakeToCameCase</span>&lt;<span class="hljs-title class_">UserInfo</span>&gt;</mark> =&gt; {</code>
-        <code class="hljs language-typescript" data-highlighted="yes">  <span class="hljs-keyword">const</span> response = axios.<span class="hljs-property">request</span>&lt;<span class="hljs-title class_">UserInfo</span>&gt;(config);</code>
-        <code class="hljs language-typescript" data-highlighted="yes">  <span class="hljs-keyword">return</span> <span class="hljs-comment">/* ... */</span>;</code>
-        <code class="hljs language-typescript" data-highlighted="yes">};</code>
-      </pre>
+      <pre
+        class="font-size-20"
+      ><code class="hljs language-typescript">type UserInfoResponse = {
+  id: UserId;
+  package_name: string;
+};
+type UserInfo = ObjectToCamelCase&lt;UserInfoResponse>;
+const requestUsersInfo = (): UserInfo[] => {
+  const response = axios.request&lt;UserInfoResponse[]>(config);
+  return /* ... */;
+};</code></pre>
     </section>
 
     <!-- #endregion -->
 
     <!-- #region Не пустая стока -->
+
+    <section class="slide">
+      <h2>Запрос</h2>
+      <pre
+        class="font-size-20"
+      ><code class="hljs language-typescript">const requestUsersInfo = (filter: string): UserInfo[] => {
+  const response = axios.request&lt;UserInfoResponse[]>(config(filter));
+  return /* ... */;
+};</code></pre>
+    </section>
 
     <section class="slide">
       <h2 class="shout">Непустая строка</h2>
