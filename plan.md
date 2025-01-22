@@ -1,0 +1,26 @@
+- Брендирование типов
+- Смена нотации
+  - mapped types
+  - template literal types
+  - infer
+  - Переименование ключей
+- Конкретные значения или любая строка
+- UnionToTuple
+  - Элемент объединения
+    - Возвращаемое значение перегрузки
+      - UnionToIntersection
+        - Дистрибутивность
+  - Кортежи
+- ? Ограничение параметра дженерика через самого себя
+- Discriminated Union
+- Merge Union
+
+---
+
+- Брендирование типов
+- Смена нотации
+  - mapped types
+  - template literal types
+  - infer
+- Конкретные значения или любая строка
+- Discriminated Union
