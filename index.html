@@ -623,6 +623,192 @@ type NotFreePackageUserInfo = Extract&lt;UserInfo, { package_name: 'pro' | 'prim
     </section>
 
     <section class="slide">
+      <h2>Возвращаемое значение перегруженной функции</h2>
+
+      <ol>
+        <li>Преобразовать union в перегруженную функцию</li>
+        <li>Определить возвращаемое значение</li>
+      </ol>
+    </section>
+
+    <section class="slide">
+      <h2>Возвращаемое значение перегруженной функции</h2>
+
+      <ol>
+        <li>Преобразовать union в union функций</li>
+        <li>Преобразовать union функций в перегруженную функцию</li>
+        <li>Определить возвращаемое значение</li>
+      </ol>
+    </section>
+
+    <!-- #region Условные типы, шаблоны и infer -->
+
+    <section class="slide">
+      <h2 class="shout">Условные типы</h2>
+    </section>
+
+    <section class="slide">
+      <h2>Синтаксис</h2>
+      <pre><code class="hljs language-typescript">type ToArray&lt;T> = T extends any[]
+  ? T
+  : T[];
+
+ToArray&lt;string>; // string[]
+ToArray&lt;string[]>; // string[]
+</code></pre>
+    </section>
+
+    <section class="slide">
+      <!-- <h2>ЗАГЛУШКА ДЛЯ ОБЪЯСНЕНИЯ РАБОТЫ extends</h2> -->
+
+      <img
+        style="width: 100%; height: 100%; object-fit: contain"
+        src="assets/supset.jpg"
+        alt="Диаграмма супертипов"
+      />
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">Вывод типов</h2>
+    </section>
+
+    <section class="slide">
+      <h2>Вывод типов</h2>
+
+      <div class="next"></div>
+      <div class="next"></div>
+
+      <!-- <pre id="inferP1"><code class="language-typescript font-size-24">    type ArrayItem&lt;T> = /* */;
+      </code></pre> -->
+
+      <pre
+        id="inferP1"
+      ><code class="language-typescript font-size-24 hljs" data-highlighted="yes">    <span class="hljs-keyword">type</span> <span class="hljs-title class_">ArrayItem</span>&lt;T&gt; = <span class="hljs-comment">/* */</span>;
+      </code></pre>
+
+      <!-- <pre id="inferP2"><code class="language-typescript font-size-24">    type ArrayItem&lt;T> = T extends any[]
+      ? /* */
+      : never;
+      </code></pre> -->
+
+      <pre
+        id="inferP2"
+      ><code class="language-typescript font-size-24 hljs" data-highlighted="yes">    <span class="hljs-keyword">type</span> <span class="hljs-title class_">ArrayItem</span>&lt;T&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">any</span>[]
+      ? <span class="hljs-comment">/* */</span>
+      : <span class="hljs-built_in">never</span>;
+      </code></pre>
+
+      <!-- <pre id="inferP3"><code class="language-typescript font-size-24">    type ArrayItem&lt;T> = T extends (infer U)[]
+      ? U
+      : never;
+      </code></pre> -->
+
+      <pre
+        id="inferP3"
+      ><code class="language-typescript font-size-24 hljs" data-highlighted="yes">    <span class="hljs-keyword">type</span> <span class="hljs-title class_">ArrayItem</span>&lt;T&gt; = T <span class="hljs-keyword">extends</span> (infer U)[]
+      ? U
+      : <span class="hljs-built_in">never</span>;
+
+    <span class="next"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Checked</span> = <span class="hljs-title class_">ArrayItem</span>&lt;<span class="hljs-built_in">number</span>[]&gt;; <span class="hljs-comment">// <span class="hljs-built_in">number</span></span></span>
+      </code></pre>
+
+      <style>
+        .next:is(.visited, .active) + .next + #inferP1,
+        .next:not(.active) + .next ~ #inferP2,
+        .next + .next:not(:is(.active, .visited)) ~ #inferP3 {
+          display: none;
+        }
+
+        .next.visited + .next.visited ~ :is(#inferP1, #inferP2) {
+          display: none;
+        }
+      </style>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">
+        Можно&nbsp;ли что-то подставить, чтобы условие было верным
+      </h2>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">Можно использовать для создания переменных</h2>
+    </section>
+
+    <section class="slide">
+      <h2>Создание переменных</h2>
+
+      <!-- <pre><code class="language-typescript font-size-24">    type Generic&lt;T> = GetNewType&lt;T> extends infer U
+      ? U
+      : never;
+      </code></pre> -->
+
+      <pre><code class="language-typescript font-size-24 hljs" data-highlighted="yes">    <span class="hljs-keyword">type</span> <span class="hljs-title class_">Generic</span>&lt;T&gt; = <span class="hljs-title class_">GetNewType</span>&lt;T&gt; <span class="hljs-keyword">extends</span> infer U
+      ? U
+      : <span class="hljs-built_in">never</span>;
+      </code></pre>
+    </section>
+
+    <!-- #endregion -->
+
+    <!-- #region Дистрибутивность -->
+
+    <section class="slide">
+      <h2 class="shout">Distributive Conditional Types</h2>
+    </section>
+
+    <section class="slide">
+      <h2>Без Distributive Conditional Types</h2>
+
+      <div class="columns two">
+        <pre><code class="language-typescript font-size-20">    type HelloWorld = 'Hello' | 'World';
+    type Arr = HelloWorld[];</code></pre>
+
+        <pre
+          class="next"
+        ><code class="language-typescript font-size-20">    type Arr = ('Hello' | 'World')[];</code></pre>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h2>Distributive Conditional Types</h2>
+
+      <pre><code class="language-typescript font-size-24">    type Arr = 'Hello'[] | 'World'[];
+      </code></pre>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">Как ее запустить?</h2>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">1️⃣ Использовать условный тип</h2>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">2️⃣.1️⃣ Проверять аргумент Generic-типа</h2>
+    </section>
+
+    <section class="slide">
+      <h2>2️⃣.1️⃣ Проверять аргумент Generic</h2>
+
+      <!-- <pre><code class="language-typescript font-size-24">    type Distributive&lt;T> = T extends any ? T[] : never;
+
+    type ArraysUnion = Distributive&lt;string | number>
+    type ArraysUnion = Distributive&lt;string> | Distributive&lt;number>
+    type ArraysUnion = string[] | number[]
+      </code></pre> -->
+
+      <pre><code class="language-typescript font-size-24 hljs" data-highlighted="yes">    <span class="hljs-keyword">type</span> <span class="hljs-title class_">Distributive</span>&lt;T&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">any</span> ? T[] : <span class="hljs-built_in">never</span>;
+
+    <span class="next"><span class="hljs-keyword">type</span> <span class="hljs-title class_">ArraysUnion</span> = <span class="hljs-title class_">Distributive</span>&lt;<span class="hljs-built_in">string</span> | <span class="hljs-built_in">number</span>&gt;</span>
+    <span class="next"><span class="hljs-keyword">type</span> <span class="hljs-title class_">ArraysUnion</span> = <span class="hljs-title class_">Distributive</span>&lt;<span class="hljs-built_in">string</span>&gt; | <span class="hljs-title class_">Distributive</span>&lt;<span class="hljs-built_in">number</span>&gt;</span>
+    <span class="next"><span class="hljs-keyword">type</span> <span class="hljs-title class_">ArraysUnion</span> = <span class="hljs-built_in">string</span>[] | <span class="hljs-built_in">number</span>[]</span>
+  </code></pre>
+    </section>
+    <!-- #endregion -->
+
+    <section class="slide">
       <h2>Union To Intersection</h2>
       <pre
         class="font-size-18"
@@ -788,6 +974,188 @@ const packagesList: UnionToTuple&lt;PackageName> = ['free', 'prime', 'pro'];
       <h2 class="shout">Преобразование имен ключей</h2>
     </section>
 
+    <!-- #region База Template literal types -->
+
+    <section class="slide">
+      <h2 class="shout">Template Literal Types</h2>
+    </section>
+
+    <section class="slide">
+      <h2>Template Literal Types</h2>
+
+      <!-- <pre><code class="language-typescript font-size-24">    type Name = 'world';
+    type Greet = `Hello ${Name}!`;
+
+
+    type Greet = 'Hello world!';
+      </code></pre> -->
+
+      <!-- <pre class="next"><code class="language-typescript font-size-24">      </code></pre> -->
+
+      <pre><code class="language-typescript font-size-24 hljs" data-highlighted="yes">    <span class="hljs-keyword">type</span> <span class="hljs-title class_">Name</span> = <span class="hljs-string">'world'</span>;
+    <span class="hljs-keyword">type</span> <span class="hljs-title class_">Greet</span> = <span class="hljs-string">`Hello <span class="hljs-subst">${Name}</span>!`</span>;
+
+    <span class="next"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Greet</span> = <span class="hljs-string">'Hello world!'</span>;</span>
+      </code></pre>
+    </section>
+
+    <section class="slide">
+      <h2>Template Literal Types</h2>
+
+      <!-- <pre><code class="language-typescript font-size-24">    type Name = 'world' | 'Everyone';
+    type Greet = `Hello ${Name}!`;
+
+    type Greet = 'Hello world!' | 'Hello Everyone!';
+      </code></pre> -->
+      <pre><code class="language-typescript font-size-24 hljs" data-highlighted="yes">    <span class="hljs-keyword">type</span> <span class="hljs-title class_">Name</span> = <span class="hljs-string">'world'</span> | <span class="hljs-string">'Everyone'</span>;
+    <span class="hljs-keyword">type</span> <span class="hljs-title class_">Greet</span> = <span class="hljs-string">`Hello <span class="hljs-subst">${Name}</span>!`</span>;
+
+    <span class="next"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Greet</span> = <span class="hljs-string">'Hello world!'</span> | <span class="hljs-string">'Hello Everyone!'</span>;</span>
+      </code></pre>
+    </section>
+
+    <section class="slide">
+      <h2>Template Literal Types</h2>
+
+      <!-- <pre><code class="language-typescript font-size-24">    type Greet = `Hello ${string}!`;
+      </code></pre> -->
+
+      <pre><code class="language-typescript font-size-24 hljs" data-highlighted="yes">    <span class="hljs-keyword">type</span> <span class="hljs-title class_">Greet</span> = <span class="hljs-string">`Hello <span class="hljs-subst">${<span class="hljs-built_in">string</span>}</span>!`</span>;
+      </code></pre>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">
+        <span class="hljs-string"
+          >`<span class="hljs-subst"
+            >${<span class="hljs-built_in">string</span>}</span
+          >`</span
+        >
+        аналогичен (.*)
+      </h2>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">
+        Можно использовать как супертип с&nbsp;<span class="hljs-keyword"
+          >extends</span
+        >
+      </h2>
+    </section>
+
+    <section class="slide">
+      <h2>
+        Можно использовать как супертип с&nbsp;<span class="hljs-keyword"
+          >extends</span
+        >
+      </h2>
+
+      <!-- <pre><code class="language-typescript font-size-24">    type HasValue&lt;T> = T extends `{{ ${string} }}`
+      ? true
+      : false
+
+    type Checked = HasValue<'{{ name }}'>; // true
+      </code></pre> -->
+
+      <!-- <pre><code class="language-typescript font-size-24 hljs" data-highlighted="yes">    <span class="hljs-keyword">type</span> <span class="hljs-title class_">HasValue</span>&lt;T&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-string">`{{ <span class="hljs-subst">${<span class="hljs-built_in">string</span>}</span> }}`</span>
+      ? <span class="hljs-literal">true</span>
+      : <span class="hljs-literal">false</span>
+      </code></pre> -->
+      <pre><code class="language-typescript font-size-24 hljs" data-highlighted="yes">    <span class="hljs-keyword">type</span> <span class="hljs-title class_">HasValue</span>&lt;T&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-string">`{{ <span class="hljs-subst">${<span class="hljs-built_in">string</span>}</span> }}`</span>
+      ? <span class="hljs-literal">true</span>
+      : <span class="hljs-literal">false</span>
+
+    <span class="next"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Checked</span> = <span class="hljs-title class_">HasValue</span>&lt;<span class="hljs-string">'Lorem, {{ name }} dolor'</span>&gt;; <span class="hljs-comment">// <span class="next">false</span></span></span>
+        </code></pre>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">Важное отличие от&nbsp;регулярок</h2>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">Шаблону сопоставляется сразу вся строка</h2>
+    </section>
+
+    <section class="slide">
+      <!-- Изначально слайд 81 -->
+      <h2>Шаблону сопоставляется сразу вся строка</h2>
+
+      <!-- <pre><code class="language-typescript">    type HasValue = 'Lorem, {{ name }} dolor' extends `{{ ${string} }}`
+      ? true
+      : false
+      </code></pre> -->
+
+      <div class="next"></div>
+      <div class="next"></div>
+
+      <pre
+        id="fullComparison"
+      ><code class="language-typescript hljs font-size-18" data-highlighted="yes">    <span class="hljs-keyword">type</span> <span class="hljs-title class_">HasValue</span> = <span class="hljs-string">'Lorem, {{ name }} dolor'</span> <span class="hljs-keyword">extends</span> <span class="hljs-string">`<span class="border-red"></span><span class="prefix hljs-subst">${<span class="hljs-built_in">string</span>}</span>{{ <span class="hljs-subst">${<span class="hljs-built_in">string</span>}</span> }}<span class="postfix hljs-subst">${<span class="hljs-built_in">string</span>}</span><span class="border-red"></span>`</span>
+      ? <span class="hljs-literal">true</span>
+      : <span class="hljs-literal">false</span>
+
+    <span class="false"
+      ><span class="hljs-keyword">type</span> <span class="hljs-title class_">HasValue</span> = <span class="hljs-literal">false</span></span
+    ><span class="true"
+      ><span class="hljs-keyword">type</span> <span class="hljs-title class_">HasValue</span> = <span class="hljs-literal">true</span></span
+    >
+      </code></pre>
+
+      <style>
+        #fullComparison {
+          .border-red,
+          .false {
+            display: none;
+          }
+        }
+
+        .next
+          + :is(.next:not(:is(.visited, .active)))
+          + #fullComparison
+          :is(.prefix, .postfix, .true) {
+          display: none;
+        }
+
+        .next
+          + :is(.next:not(:is(.visited, .active)))
+          + #fullComparison
+          .false {
+          display: inline;
+        }
+
+        .next.active + .next + #fullComparison .border-red {
+          display: inline;
+        }
+
+        .next + .next.active + #fullComparison :is(.prefix, .postfix) {
+          outline: 2px solid #ed4344;
+          outline-offset: 2px;
+        }
+      </style>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">Работает вместе с&nbsp;infer</h2>
+    </section>
+
+    <section class="slide">
+      <h2>Работает вместе с&nbsp;infer</h2>
+
+      <!-- <pre><code class="language-typescript font-size-24">    type Greet = 'Hello world!' extends `Hello ${infer U}!`
+      ? U
+      : never;
+      </code></pre> -->
+
+      <pre><code class="language-typescript font-size-24 hljs" data-highlighted="yes">    <span class="hljs-keyword">type</span> <span class="hljs-title class_">Greet</span> = <span class="hljs-string">'Hello world!'</span> <span class="hljs-keyword">extends</span> <span class="hljs-string">`Hello <span class="hljs-subst">${infer U}</span>!`</span>
+      ? U
+      : <span class="hljs-built_in">never</span>;
+
+    <span class="next"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Greet</span> = <span class="hljs-string">'world'</span></span>
+      </code></pre>
+    </section>
+    <!-- #endregion -->
+
     <section class="slide">
       <h2 class="shout">Snake To Camel Case</h2>
     </section>
@@ -859,7 +1227,7 @@ sendMetrics(''); // 😢</code></pre>
 const sendMetrics = (someImportantId: NotEmptyString) => {
   /*  */
 };
-
+sendMetrics('1'); // Ok
 sendMetrics('');
 //          ^^ Несовместимые типы</code></pre>
     </section>
@@ -893,6 +1261,68 @@ const process = (someImportantId: string) => {
 
   sendMetrics(someImportantId);
 };</code></pre>
+    </section>
+
+    <!-- #endregion -->
+
+    <!-- #region Prettify -->
+    <section class="slide">
+      <h2>Комбинированные типы</h2>
+      <pre
+        class="font-size-16"
+      ><code class="hljs language-typescript">type PackageName = PackageInfo['package_name']; // 'free' | 'pro' | 'prime'</code></pre>
+      <div class="columns three font-size-16" style="gap: 30px">
+        <div>
+          <pre><code class="mark hljs language-typescript">type FreePackageInfo = {
+  package_name: 'free';
+  trial_end_date: string;
+}</code></pre>
+        </div>
+        <div>
+          <pre><code class="hljs language-typescript">type ProPackageInfo = {
+  package_name: 'pro';
+  subscription_months: number;
+}</code></pre>
+        </div>
+        <div>
+          <pre><code class="hljs language-typescript">type PrimePackageInfo = {
+  package_name: 'prime';
+  subscription_months: number;
+  some_prime_stuff: boolean;
+}</code></pre>
+        </div>
+      </div>
+
+      <pre
+        class="font-size-16"
+      ><code class="hljs language-typescript">type PackageInfo = FreePackageInfo | ProPackageInfo | PrimePackageInfo;
+type UserInfo = { id: UserId } & PackageInfo;
+      </code></pre>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">Хочется красиво</h2>
+    </section>
+
+    <section class="slide">
+      <h2>Prettify</h2>
+      <pre><code class="hljs language-typescript">type Prettify&lt;T> = {
+  [Key in keyof T]: T[Key];
+} & {};</code></pre>
+    </section>
+
+    <section class="slide">
+      <h2>UserInfo</h2>
+      <pre
+        class="font-size-16"
+      ><code class="hljs language-typescript">type UserInfo =  {
+  id: UserId; package_name: "free"; trial_end_date: string;
+} | {
+  id: UserId; package_name: "pro"; subscription_months: number;
+} | {
+  id: UserId; package_name: "prime"; subscription_months: number; some_prime_stuff: boolean;
+};
+      </code></pre>
     </section>
 
     <!-- #endregion -->
