@@ -342,30 +342,42 @@ type Prettify<T> = {
   [Key in keyof T]: T[Key];
 } & {};
 
-type PPackageInfo = Prettify<PackageInfo>
-type PackageInfo = {
-  package_name: "free";
-  trial_end_date: string;
-} | {
-  package_name: "pro";
-  subscription_months: number;
-} | {
-  package_name: "prime";
-  subscription_months: number;
-  some_prime_stuff: boolean;
-}
-type PUserInfo = Prettify<UserInfo>
-type UserInfo =  {
-  id: UserId;
-  package_name: "free";
-  trial_end_date: string;
-} | {
-  id: UserId;
-  package_name: "pro";
-  subscription_months: number;
-} | {
-  id: UserId;
-  package_name: "prime";
-  subscription_months: number;
-  some_prime_stuff: boolean;
-}
+type PPackageInfo = Prettify<PackageInfo>;
+type PackageInfo =
+  | {
+      package_name: 'free';
+      trial_end_date: string;
+    }
+  | {
+      package_name: 'pro';
+      subscription_months: number;
+    }
+  | {
+      package_name: 'prime';
+      subscription_months: number;
+      some_prime_stuff: boolean;
+    };
+type PUserInfo = Prettify<UserInfo>;
+type UserInfo =
+  | {
+      id: UserId;
+      package_name: 'free';
+      trial_end_date: string;
+    }
+  | {
+      id: UserId;
+      package_name: 'pro';
+      subscription_months: number;
+    }
+  | {
+      id: UserId;
+      package_name: 'prime';
+      subscription_months: number;
+      some_prime_stuff: boolean;
+    };
+
+// type IsGreeting<T> = T extends `Hello ${string}!` ? true : false;
+
+type IsGreeting = 'Oh, Hello world!))))' extends `Hello ${string}!`
+  ? true
+  : false;
