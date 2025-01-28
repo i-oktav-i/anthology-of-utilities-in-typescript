@@ -26,9 +26,18 @@
         --dark-theme-grey: color-mix(in oklch, #fff, #000 20%);
       }
       .border-red {
-        outline: 2px solid #ed4344;
-        outline-offset: 2px;
+        &:not(.next),
+        &.next.active {
+          outline: 2px solid #ed4344;
+          outline-offset: 2px;
+        }
+
+        .shower.full
+          &.next:not(.hidden):not(.next:not(:is(.visited, .active)) .next) {
+          visibility: visible;
+        }
       }
+
       .border-bottom-red {
         position: relative;
       }
@@ -152,7 +161,7 @@
     </section>
 
     <section class="slide">
-      <h2 class="shout">Snake Case в&nbsp;данных</h2>
+      <h2 class="shout">snake_case в&nbsp;данных</h2>
     </section>
 
     <!-- #endregion -->
@@ -165,7 +174,7 @@
 
     <section class="slide">
       <h2>Типы === Переменные</h2>
-      <pre><code class="hljs language-typescript">type HelloWorld = 'Hello' | 'World';
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">HelloWorld</span> = <span class="hljs-string">'Hello'</span> | <span class="hljs-string">'World'</span>;
       </code></pre>
     </section>
 
@@ -175,9 +184,7 @@
 
     <section class="slide">
       <h2 class="shout">
-        Generic<span class="next">
-          &nbsp;&mdash; шаблон для создания типов</span
-        >
+        Generic<span class="next"> &nbsp;— шаблон для создания типов</span>
       </h2>
     </section>
 
@@ -216,6 +223,10 @@
     </section>
 
     <section class="slide">
+      <h2 class="shout">ВОЗМОЖНО СЛАЙД ПРО ПРЕДЫДУЩИЙ ДОКЛАД</h2>
+    </section>
+
+    <section class="slide">
       <h2>Ограничение значений параметров</h2>
 
       <div class="next"></div>
@@ -245,16 +256,16 @@
 
     <section class="slide">
       <h2>Ограничение значений параметров</h2>
-      <pre><code class="hljs language-typescript">type Generic&lt;
-  Key extends keyof T,
-  T extends string
-> = /* */;
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Generic</span>&lt;
+  <span class="border-red"><span class="hljs-title class_">Key</span> <span class="hljs-keyword">extends</span> keyof T,</span>
+  T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">string</span>
+&gt; = <span class="hljs-comment">/* */</span>;
       </code></pre>
     </section>
 
     <section class="slide">
       <h2>Ограничение значений параметров</h2>
-      <pre><code class="hljs language-typescript">type Generic&lt;T extends Required&ltT>> = /* */;
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Generic</span>&lt;<span class="border-red">T <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Required</span>&lt;T&gt;</span>&gt; = <span class="hljs-comment">/* */</span>;
       </code></pre>
     </section>
 
@@ -263,13 +274,13 @@
     </section>
 
     <section class="slide">
-      <h2>Синтаксис</h2>
-      <pre><code class="hljs language-typescript">type ToArray&lt;T> = T extends any[]
+      <h2>Условные типы</h2>
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">ToArray</span>&lt;T&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">any</span>[]
   ? T
   : T[];
 
-ToArray&lt;string>; // string[]
-ToArray&lt;string[]>; // string[]
+<span class="next"><span class="hljs-title class_">ToArray</span>&lt;<span class="hljs-built_in">string</span>&gt;; <span class="hljs-comment">// string[]</span></span>
+<span class="next"><span class="hljs-title class_">ToArray</span>&lt;<span class="hljs-built_in">string</span>[]&gt;; <span class="hljs-comment">// string[]</span></span>
 </code></pre>
     </section>
 
@@ -348,7 +359,7 @@ ToArray&lt;string[]>; // string[]
       : never;
       </code></pre> -->
 
-      <pre><code class="language-typescript font-size-24 hljs" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Generic</span>&lt;T&gt; = <span class="hljs-title class_">GetNewType</span>&lt;T&gt; <span class="hljs-keyword">extends</span> infer U
+      <pre><code class="language-typescript font-size-24 hljs" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Generic</span>&lt;T&gt; = <span class="next border-red"><span class="hljs-title class_">GetNewType</span>&lt;T&gt;</span> <span class="hljs-keyword">extends</span> <span class="next border-red">infer U</span>
   ? U
   : <span class="hljs-built_in">never</span>;
       </code></pre>
@@ -418,15 +429,36 @@ ToArray&lt;string[]>; // string[]
     </section>
 
     <section class="slide">
+      <h2 class="shout font-90">
+        <code class="language-typescript hljs" data-highlighted="yes"
+          ><span class="hljs-string">'true'</span> |
+          <span class="hljs-string">'fasle'</span></code
+        >
+      </h2>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout font-90">
+        <code class="hljs language-typescript" data-highlighted="yes"
+          ><span class="hljs-string"
+            >`<span class="hljs-subst"
+              >${<span class="hljs-built_in">boolean</span>}</span
+            >`</span
+          ></code
+        >
+      </h2>
+    </section>
+
+    <section class="slide">
       <h2 class="shout">Можно использовать как супертип</h2>
     </section>
 
     <section class="slide">
       <h2>Можно использовать как супертип</h2>
 
-      <pre><code class="language-typescript hljs">type IsGreeting&lt;T> = T extends `Hello ${string}!`
-  ? true
-  : false;
+      <pre><code class="language-typescript hljs" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">IsGreeting</span>&lt;T&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-string">`Hello <span class="hljs-subst">${<span class="hljs-built_in">string</span>}</span>!`</span>
+  ? <span class="hljs-literal">true</span>
+  : <span class="hljs-literal">false</span>;
       </code></pre>
     </section>
 
@@ -456,11 +488,7 @@ ToArray&lt;string[]>; // string[]
   ? <span class="hljs-literal">true</span>
   : <span class="hljs-literal">false</span>
 
-<span class="false"
-  ><span class="hljs-keyword">type</span> <span class="hljs-title class_">IsGreeting</span> = <span class="hljs-literal">false</span></span
-><span class="true"
-  ><span class="hljs-keyword">type</span> <span class="hljs-title class_">IsGreeting</span> = <span class="hljs-literal">true</span></span
->
+<span class="false"><span class="hljs-keyword">type</span> <span class="hljs-title class_">IsGreeting</span> = <span class="hljs-literal">false</span></span><span class="true"><span class="hljs-keyword">type</span> <span class="hljs-title class_">IsGreeting</span> = <span class="hljs-literal">true</span></span>
       </code></pre>
 
       <style>
@@ -528,21 +556,21 @@ ToArray&lt;string[]>; // string[]
 
     <section class="slide">
       <h2>Непустая строка</h2>
-      <pre><code class="hljs language-typescript">const sendMetrics = (someImportantId: string) => {
-  /*  */
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">const</span> <span class="hljs-title function_">sendMetrics</span> = (<span class="hljs-params">someImportantId: <span class="hljs-built_in">string</span></span>) =&gt; {
+  <span class="hljs-comment">/*  */</span>
 };
 
-sendMetrics(''); // 😢</code></pre>
+<span class="hljs-title function_">sendMetrics</span>(<span class="hljs-string">''</span>); <span class="hljs-comment">// 😢</span></code></pre>
     </section>
 
     <section class="slide">
       <h2>Непустая строка</h2>
-      <pre><code class="hljs language-typescript">const sendMetrics = (someImportantId: string) => {
-  if (!someImportantId) { /* ???????? */ }
-  /*  */
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">const</span> <span class="hljs-title function_">sendMetrics</span> = (<span class="hljs-params">someImportantId: <span class="hljs-built_in">string</span></span>) =&gt; {
+  <span class="hljs-keyword">if</span> (!someImportantId) { <span class="hljs-comment">/* ???????? */</span> }
+  <span class="hljs-comment">/*  */</span>
 };
 
-sendMetrics(''); // 😢</code></pre>
+<span class="hljs-title function_">sendMetrics</span>(<span class="hljs-string">''</span>); <span class="hljs-comment">// 😢</span></code></pre>
     </section>
 
     <section class="slide">
@@ -575,35 +603,35 @@ sendMetrics(''); // 😢</code></pre>
 
     <section class="slide">
       <h2>Непустая строка</h2>
-      <pre><code class="hljs language-typescript">type NotEmptyString = `${any}${string}`;
-const sendMetrics = (someImportantId: NotEmptyString) => {
-  /*  */
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">NotEmptyString</span> = <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-built_in">any</span>}</span><span class="hljs-subst">${<span class="hljs-built_in">string</span>}</span>`</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">sendMetrics</span> = (<span class="hljs-params">someImportantId: <span class="hljs-title class_">NotEmptyString</span></span>) =&gt; {
+  <span class="hljs-comment">/*  */</span>
 };</code></pre>
     </section>
 
     <section class="slide">
       <h2>Непустая строка</h2>
-      <pre><code class="hljs language-typescript">sendMetrics('1'); // Ok
-sendMetrics('');
-//          ^^ Несовместимые типы</code></pre>
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-title function_">sendMetrics</span>(<span class="hljs-string">'1'</span>); <span class="hljs-comment">// Ok</span>
+<span class="hljs-title function_">sendMetrics</span>(<span class="hljs-string codeError">''</span>);
+<span class="hljs-comment">//          ^^ Несовместимые типы</span></code></pre>
     </section>
 
     <section class="slide">
       <h2>Непустая строка</h2>
-      <pre><code class="hljs language-typescript">const process = (someImportantId: string) => {
-  if (!someImportantId) return;
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">const</span> <span class="hljs-title function_">process</span> = (<span class="hljs-params">someImportantId: <span class="hljs-built_in">string</span></span>) =&gt; {
+  <span class="hljs-keyword">if</span> (!someImportantId) <span class="hljs-keyword">return</span>;
 
-  sendMetrics(someImportantId);
-  //          ^^^^^^^^^^^^^^^^ Несовместимые типы
+  <span class="hljs-title function_">sendMetrics</span>(<span class="codeError">someImportantId</span>);
+  <span class="hljs-comment">//          ^^^^^^^^^^^^^^^^ Несовместимые типы</span>
 };</code></pre>
     </section>
 
     <section class="slide">
       <h2>Непустая строка</h2>
-      <pre><code class="hljs language-typescript">const process = (someImportantId: string) => {
-  if (!someImportantId) return;
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">const</span> <span class="hljs-title function_">process</span> = (<span class="hljs-params">someImportantId: <span class="hljs-built_in">string</span></span>) =&gt; {
+  <span class="hljs-keyword">if</span> (!someImportantId) <span class="hljs-keyword">return</span>;
 
-  sendMetrics(someImportantId as NotEmptyString);
+  <span class="hljs-title function_">sendMetrics</span>(someImportantId <span class="hljs-keyword">as</span> <span class="hljs-title class_">NotEmptyString</span>);
 };</code></pre>
     </section>
 
@@ -611,9 +639,9 @@ sendMetrics('');
       <h2>Type Guard</h2>
       <pre
         class="font-size-20"
-      ><code class="hljs language-typescript">const isNotEmptyString = (
-  value: string
-): value is NotEmptyString => !!value;
+      ><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">const</span> isNotEmptyString = (
+  <span class="hljs-attr">value</span>: <span class="hljs-built_in">string</span>
+): value is <span class="hljs-title class_">NotEmptyString</span> =&gt; !!value;
       </code></pre>
     </section>
 
@@ -621,17 +649,17 @@ sendMetrics('');
       <h2>Непустая строка</h2>
       <pre
         class="font-size-20"
-      ><code class="hljs language-typescript">const process = (someImportantId: string) => {
-  if (!isNotEmptyString(someImportantId)) return;
+      ><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">const</span> <span class="hljs-title function_">process</span> = (<span class="hljs-params">someImportantId: <span class="hljs-built_in">string</span></span>) =&gt; {
+  <span class="hljs-keyword">if</span> (!<span class="hljs-title function_">isNotEmptyString</span>(someImportantId)) <span class="hljs-keyword">return</span>;
 
-  sendMetrics(someImportantId);
+  <span class="hljs-title function_">sendMetrics</span>(someImportantId);
 };</code></pre>
     </section>
 
     <section class="slide">
       <h2>Непустая строка</h2>
-      <pre><code class="hljs language-typescript">type AtLeastTwoChars = `${any}${string}${string}`;
-type AtLeastThreeChars = `${any}${string}${string}${string}`;
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">AtLeastTwoChars</span> = <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-built_in">any</span>}</span><span class="hljs-subst">${<span class="hljs-built_in">string</span>}</span><span class="hljs-subst">${<span class="hljs-built_in">string</span>}</span>`</span>;
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">AtLeastThreeChars</span> = <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-built_in">any</span>}</span><span class="hljs-subst">${<span class="hljs-built_in">string</span>}</span><span class="hljs-subst">${<span class="hljs-built_in">string</span>}</span><span class="hljs-subst">${<span class="hljs-built_in">string</span>}</span>`</span>;
       </code></pre>
     </section>
 
@@ -647,8 +675,8 @@ type AtLeastThreeChars = `${any}${string}${string}${string}`;
       <h2>Путаница в данных</h2>
       <pre
         class="font-size-20"
-      ><code class="hljs language-typescript">const kilometersToMeters = (value: number) => value * 1000;
-const metersToKilometers = (value: number) => value / 1000;</code></pre>
+      ><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">const</span> <span class="hljs-title function_">kilometersToMeters</span> = (<span class="hljs-params">value: <span class="hljs-built_in">number</span></span>) =&gt; value * <span class="hljs-number">1000</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">metersToKilometers</span> = (<span class="hljs-params">value: <span class="hljs-built_in">number</span></span>) =&gt; value / <span class="hljs-number">1000</span>;</code></pre>
     </section>
 
     <section class="slide">
@@ -668,10 +696,10 @@ const metersToKilometers = (value: number) => value / 1000;</code></pre>
 
     <section class="slide">
       <h2>Структурная типизация</h2>
-      <pre><code class="hljs language-typescript">type Kilometers = number;
-type Meters = number;
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Kilometers</span> = <span class="hljs-built_in">number</span>;
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">Meters</span> = <span class="hljs-built_in">number</span>;
 
-Kilometers === Meters;</code></pre>
+<span class="hljs-title class_">Kilometers</span> === <span class="hljs-title class_">Meters</span>;</code></pre>
     </section>
 
     <section class="slide">
@@ -703,32 +731,32 @@ Kilometers === Meters;</code></pre>
     <section class="slide">
       <h2><span class="hljs-keyword">unique</span> symbol</h2>
 
-      <pre>
-        <code data-highlighted="yes" class="hljs language-typescript"><span class="hljs-keyword">const</span> <span class="hljs-built_in">symbol</span> = <span class="hljs-title class_">Symbol</span>();
+      <pre>        <code data-highlighted="yes" class="hljs language-typescript"><span class="hljs-keyword">const</span> <span class="hljs-built_in">symbol</span> = <span class="hljs-title class_">Symbol</span>();
 <span class="hljs-keyword">declare</span> <span class="hljs-keyword">const</span> <span class="hljs-attr">symbol</span>: unique <span class="hljs-built_in">symbol</span>;</code>
       </pre>
     </section>
 
     <section class="slide">
       <h2>Брендирование типов</h2>
-      <pre><code class="hljs language-typescript">declare const kilometersBrand: unique symbol;
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">declare</span> <span class="hljs-keyword">const</span> <span class="hljs-attr">kilometersBrand</span>: unique <span class="hljs-built_in">symbol</span>;
 
-type Kilometers = number & {
-  <span class="border-red">[kilometersBrand]: never;</span>
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">Kilometers</span> = <span class="hljs-built_in">number</span> &amp; {
+  [kilometersBrand]: <span class="hljs-built_in">never</span>;
 };</code></pre>
     </section>
 
     <section class="slide">
       <h2>Брендирование типов</h2>
-      <pre class="font-size-22"><code class="hljs language-typescript"
->type Brand&lt;
-  TType,
-  TBrand extends symbol
-> = TBrand & { [key in TBrand]: never };
+      <pre
+        class="font-size-22"
+      ><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Brand</span>&lt;
+  <span class="hljs-title class_">TType</span>,
+  <span class="hljs-title class_">TBrand</span> <span class="hljs-keyword">extends</span> <span class="hljs-built_in">symbol</span>
+&gt; = <span class="hljs-title class_">TBrand</span> &amp; { [key <span class="hljs-keyword">in</span> <span class="hljs-title class_">TBrand</span>]: <span class="hljs-built_in">never</span> };
 
-type BrandedNumber&lt;
-  TBrand extends symbol
-> = Brand&lt;number, TBrand>;
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">BrandedNumber</span>&lt;
+  <span class="hljs-title class_">TBrand</span> <span class="hljs-keyword">extends</span> <span class="hljs-built_in">symbol</span>
+&gt; = <span class="hljs-title class_">Brand</span>&lt;<span class="hljs-built_in">number</span>, <span class="hljs-title class_">TBrand</span>&gt;;
       </code></pre>
     </section>
 
@@ -736,19 +764,19 @@ type BrandedNumber&lt;
       <h2>Брендирование типов</h2>
       <pre
         class="font-size-20"
-      ><code class="hljs language-typescript">type Kilometers = BrandedNumber&lt;typeof kilometersBrand>;
-type Meters = BrandedNumber&lt;typeof metersBrand>;
+      ><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Kilometers</span> = <span class="hljs-title class_">BrandedNumber</span>&lt;<span class="hljs-keyword">typeof</span> kilometersBrand&gt;;
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">Meters</span> = <span class="hljs-title class_">BrandedNumber</span>&lt;<span class="hljs-keyword">typeof</span> metersBrand&gt;;
 
-const kilometersToMeters = (value: Kilometers) => value * 1000;
-const metersToKilometers = (value: Meters) => value / 1000;</code></pre>
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">kilometersToMeters</span> = (<span class="hljs-params">value: Kilometers</span>) =&gt; value * <span class="hljs-number">1000</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">metersToKilometers</span> = (<span class="hljs-params">value: Meters</span>) =&gt; value / <span class="hljs-number">1000</span>;</code></pre>
     </section>
 
     <section class="slide">
       <h2>Брендирование типов</h2>
-      <pre><code class="hljs language-typescript">let distance!: Kilometers;
-kilometersToMeters(distance);
-metersToKilometers(distance);
-//                 ^^^^^^^^ Не совместимые типы</code></pre>
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">let</span> distance!: <span class="hljs-title class_">Kilometers</span>;
+<span class="hljs-title function_">kilometersToMeters</span>(distance);
+<span class="hljs-title function_">metersToKilometers</span>(<span class="codeError">distance</span>);
+<span class="hljs-comment">//                 ^^^^^^^^ Не совместимые типы</span></code></pre>
     </section>
 
     <section class="slide">
@@ -759,11 +787,11 @@ metersToKilometers(distance);
 
     <section class="slide">
       <h2>Брендирование типов</h2>
-      <pre><code class="hljs language-typescript">type Meters = BrandedNumber&lt;typeof metersBrand>;
-type Radius = BrandedNumber&lt;typeof radiusBrand>;
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Meters</span> = <span class="hljs-title class_">BrandedNumber</span>&lt;<span class="hljs-keyword">typeof</span> metersBrand&gt;;
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">Radius</span> = <span class="hljs-title class_">BrandedNumber</span>&lt;<span class="hljs-keyword">typeof</span> radiusBrand&gt;;
 
-const circleSquare = (radius: Radius & Meters) =>
-  Math.PI * radius ** 2;
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">circleSquare</span> = (<span class="hljs-params">radius: Radius &amp; Meters</span>) =&gt;
+  <span class="hljs-title class_">Math</span>.<span class="hljs-property">PI</span> * radius ** <span class="hljs-number">2</span>;
 </code></pre>
     </section>
 
@@ -777,10 +805,10 @@ const circleSquare = (radius: Radius & Meters) =>
 
     <section class="slide">
       <h2>snake_case в&nbsp;данных</h2>
-      <pre><code class="hljs language-typescript">type ResponseData = {
-  time_stamp: string;
-  short_name: string;
-  full_name: string;
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">ResponseData</span> = {
+  <span class="hljs-attr">time_stamp</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">short_name</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">full_name</span>: <span class="hljs-built_in">string</span>;
 };
       </code></pre>
     </section>
@@ -788,16 +816,16 @@ const circleSquare = (radius: Radius & Meters) =>
     <section class="slide">
       <h2>Дублирование</h2>
       <div class="columns two">
-        <pre><code class="hljs language-typescript">type ResponseData = {
-  time_stamp: string;
-  short_name: string;
-  full_name: string;
+        <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">ResponseData</span> = {
+  <span class="hljs-attr">time_stamp</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">short_name</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">full_name</span>: <span class="hljs-built_in">string</span>;
 };
         </code></pre>
-        <pre><code class="hljs language-typescript">type Data = {
-  timeStamp: string;
-  shortName: string;
-  fullName: string;
+        <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Data</span> = {
+  <span class="hljs-attr">timeStamp</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">shortName</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">fullName</span>: <span class="hljs-built_in">string</span>;
 };
         </code></pre>
       </div>
@@ -836,46 +864,47 @@ const circleSquare = (radius: Radius & Meters) =>
 
     <section class="slide">
       <h2>Mapped types</h2>
-      <pre><code class="hljs language-typescript">type Type = {/* ... */};
+
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Type</span> = {<span class="hljs-comment">/* ... */</span>};
  
-type MappedType = {
-  [Key in keyof Type]: Type[Key];
-}
+<span class="next"><span class="hljs-keyword">type</span> <span class="hljs-title class_">MappedType</span> = {
+  <span class="next">[<span class="hljs-title class_">Key</span> <span class="hljs-keyword">in</span> keyof <span class="hljs-title class_">Type</span>]: <span class="next"><span class="hljs-title class_">Type</span>[<span class="hljs-title class_">Key</span>];</span></span>
+}</span>
       </code></pre>
     </section>
 
     <section class="slide">
-      <h2 class="shout">Mapped types поддерживают дистрибутивность</h2>
-    </section>
-
-    <section class="slide">
       <h2>Mapped types</h2>
-      <pre><code class="hljs language-typescript">type Type = {/* ... */};
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Type</span> = {<span class="hljs-comment">/* ... */</span>};
  
-type MappedType = {
-  readonly [Key in keyof Type]?: Type[Key];
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">MappedType</span> = {
+  <span class="hljs-keyword border-red">readonly</span> [<span class="hljs-title class_">Key</span> <span class="hljs-keyword">in</span> keyof <span class="hljs-title class_">Type</span>]<span class="border-red">?</span>: <span class="hljs-title class_">Type</span>[<span class="hljs-title class_">Key</span>];
 }
       </code></pre>
     </section>
 
     <section class="slide">
       <h2>Mapped types</h2>
-      <pre><code class="hljs language-typescript">type Type = {/* ... */};
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Type</span> = {<span class="hljs-comment">/* ... */</span>};
  
-type MappedType = {
-  -readonly [Key in keyof Type]-?: Type[Key];
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">MappedType</span> = {
+  <span class="border-red">-</span><span class="hljs-keyword">readonly</span> [<span class="hljs-title class_">Key</span> <span class="hljs-keyword">in</span> keyof <span class="hljs-title class_">Type</span>]<span class="border-red">-</span>?: <span class="hljs-title class_">Type</span>[<span class="hljs-title class_">Key</span>];
 }
       </code></pre>
     </section>
 
     <section class="slide">
       <h2>Mapped types</h2>
-      <pre><code class="hljs language-typescript">type Type = {/* ... */};
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Type</span> = {<span class="hljs-comment">/* ... */</span>};
  
-type MappedType = {
-  [Key in keyof Type as Transform&lt;Key>]: Type[Key];
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">MappedType</span> = {
+  [<span class="hljs-title class_">Key</span> <span class="hljs-keyword">in</span> keyof <span class="hljs-title class_">Type</span> <span class="border-red"><span class="hljs-keyword">as</span> <span class="hljs-title class_">Transform</span>&lt;<span class="hljs-title class_">Key</span>&gt;</span>]: <span class="hljs-title class_">Type</span>[<span class="hljs-title class_">Key</span>];
 }
       </code></pre>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">Можно отфильтровать объект</h2>
     </section>
 
     <section class="slide">
@@ -910,25 +939,46 @@ type MappedType = {
 
     <section class="slide">
       <h2>Snake To Camel Case</h2>
+
       <pre
         class="font-size-20"
-      ><code class="hljs language-typescript">type FromSnakeToCamelCase<
-  SnakeCaseString extends string,
-  StringStart extends string = ''
-> = SnakeCaseString extends `${infer Part}_${infer Rest}`
-  ? FromSnakeToCamelCase&lt;Capitalize&lt;Rest>, `${StringStart}${Part}`>
-  : `${StringStart}${SnakeCaseString}`;</code>
-      </pre>
+      ><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">FromSnakeToCamelCase</span>&lt;
+  <span class="next border-red"><span class="hljs-title class_">SnakeCaseString</span> <span class="hljs-keyword">extends</span> <span class="hljs-built_in">string</span>,</span>
+  <span class="next border-red"><span class="hljs-title class_">ProcessedPart</span> <span class="hljs-keyword">extends</span> <span class="hljs-built_in">string</span> = <span class="hljs-string">''</span></span>
+&gt; = <span class="next border-red hidden"><span class="hljs-title class_">SnakeCaseString</span> <span class="hljs-keyword">extends</span> <span class="hljs-string"><span class="next border-red">`<span class="hljs-subst">${infer Word}</span>_<span class="hljs-subst">${infer Rest}</span>`</span></span></span>
+  <span class="next border-red hidden">? <span class="hljs-title class_">FromSnakeToCamelCase</span>&lt;<span class="next border-red"><span class="hljs-title class_">Capitalize</span>&lt;<span class="hljs-title class_">Rest</span>&gt;</span>, <span class="next border-red"><span class="hljs-string">`<span class="hljs-subst">${ProcessedPart}</span><span class="hljs-subst">${Word}</span>`</span></span>&gt;</span>
+  <span class="next border-red hidden">: <span class="hljs-string">`<span class="hljs-subst">${ProcessedPart}</span><span class="hljs-subst">${SnakeCaseString}</span>`</span>;</span>
+</code></pre>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">
+        А зачем <span class="hljs-title class_">ProcessedPart</span>
+      </h2>
+    </section>
+
+    <section class="slide">
+      <h2>Без <span class="hljs-title class_">ProcessedPart</span></h2>
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">FromSnakeToCamelCase</span>&lt;
+  <span class="hljs-title class_">SnakeCaseString</span> <span class="hljs-keyword">extends</span> <span class="hljs-built_in">string</span>
+&gt; = <span class="next border-red"><span class="hljs-title class_">SnakeCaseString</span> <span class="hljs-keyword">extends</span> <span class="hljs-string">`<span class="hljs-subst">${infer Word}</span>_<span class="hljs-subst">${infer Rest}</span>`</span></span>
+  ? <span class="next border-red"><span class="hljs-string">`<span class="hljs-subst">${Capitalize&lt;Word&gt;}</span><span class="hljs-subst">${FromSnakeToCamelCase&lt;Rest&gt;}</span>`</span></span>
+  : <span class="next border-red"><span class="hljs-title class_">SnakeCaseString</span>;</span>
+      </code></pre>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout">Оптимизация хвостовой рекурсии</h2>
     </section>
 
     <section class="slide">
       <h2>Без дублирования</h2>
-      <pre><code class="hljs language-typescript">type ResponseData = {
-  time_stamp: string;
-  short_name: string;
-  full_name: string;
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">ResponseData</span> = {
+  <span class="hljs-attr">time_stamp</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">short_name</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">full_name</span>: <span class="hljs-built_in">string</span>;
 };
-type Data = ObjectToCamelCase&lt;ResponseData&gt;
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">Data</span> = <span class="hljs-title class_">ObjectToCamelCase</span>&lt;<span class="hljs-title class_">ResponseData</span>&gt;
       </code></pre>
     </section>
 
@@ -937,10 +987,10 @@ type Data = ObjectToCamelCase&lt;ResponseData&gt;
     <!-- #region Prettify -->
     <section class="slide">
       <h2>Комбинированные типы</h2>
-      <pre><code class="hljs language-typescript">type ShortData = { id: string };
-type AdditionData = { value: string };
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">ShortData</span> = { <span class="hljs-attr">id</span>: <span class="hljs-built_in">string</span> };
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">AdditionData</span> = { <span class="hljs-attr">value</span>: <span class="hljs-built_in">string</span> };
 
-type Data = ShortData & AdditionData;
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">Data</span> = <span class="hljs-title class_">ShortData</span> &amp; <span class="hljs-title class_">AdditionData</span>;
       </code></pre>
     </section>
 
@@ -950,24 +1000,23 @@ type Data = ShortData & AdditionData;
 
     <section class="slide">
       <h2>Prettify</h2>
-      <pre><code class="hljs language-typescript">type Prettify&lt;T> = T extends object
-  ? { [K in keyof T]: Prettify&lt;T[K]> }
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Prettify</span>&lt;T&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">object</span>
+  ? { [K <span class="hljs-keyword">in</span> keyof T]: <span class="hljs-title class_">Prettify</span>&lt;T[K]&gt; }
   : T;</code></pre>
     </section>
 
     <section class="slide">
       <h2>UserInfo</h2>
-      <pre><code class="hljs language-typescript">type Data = Prettify&lt;ShortData & AdditionData>;
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Data</span> = <span class="hljs-title class_">Prettify</span>&lt;<span class="hljs-title class_">ShortData</span> &amp; <span class="hljs-title class_">AdditionData</span>&gt;;
 
-type Data = {
-  id: string;
-  value: string;
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">Data</span> = {
+  <span class="hljs-attr">id</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">value</span>: <span class="hljs-built_in">string</span>;
 };
       </code></pre>
     </section>
 
     <!-- #endregion -->
-
     <footer class="badge">
       <a href="https://github.com/shower/shower">Fork me on GitHub</a>
     </footer>
