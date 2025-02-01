@@ -8,14 +8,7 @@
 
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
-      media="(prefers-color-scheme: light)"
-    />
-
-    <link
-      rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
-      media="(prefers-color-scheme: dark)"
     />
 
     <!-- prettier-ignore -->
@@ -23,7 +16,7 @@
 
     <style>
       :root {
-        --dark-theme-grey: color-mix(in oklch, #fff, #000 20%);
+        --dark-theme-grey: #bebebe;
       }
       .border-red {
         &:not(.next),
@@ -54,15 +47,14 @@
 
       .slide {
         background-color: light-dark(#fff, #000);
+        color: rgb(201, 209, 217);
 
         h2 {
-          @media (prefers-color-scheme: dark) {
-            color: var(--dark-theme-grey);
-          }
+          color: var(--dark-theme-grey);
 
           &.shout {
             font-size: 120px;
-            text-wrap: balance;
+            /* text-wrap: balance; */
             padding: 0 40px;
             box-sizing: border-box;
 
@@ -73,9 +65,7 @@
         }
 
         li {
-          @media (prefers-color-scheme: dark) {
-            color: var(--dark-theme-grey);
-          }
+          color: var(--dark-theme-grey);
         }
       }
 
@@ -109,13 +99,8 @@
 
       .cover {
         object-fit: cover;
-        @media (prefers-color-scheme: light) {
-          opacity: 0.3;
-        }
 
-        @media (prefers-color-scheme: dark) {
-          filter: brightness(0.3);
-        }
+        filter: brightness(0.3);
       }
     </style>
   </head>
@@ -130,6 +115,28 @@
       <h2 class="shout">Антология полезностей в&nbsp;TypeScript</h2>
     </section>
 
+    <section class="slide black">
+      <div class="columns two">
+        <div>
+          <h2>Андрей Тараненко</h2>
+
+          <ul>
+            <li>Представляю холдинг&nbsp;T1</li>
+            <li>5&nbsp;лет во&nbsp;frontend&rsquo;е</li>
+            <li>
+              Все это время пишу на&nbsp;<span class="hljs-number"
+                >TypeScript</span
+              >
+            </li>
+            <li>Люблю типизировать</li>
+          </ul>
+        </div>
+        <div>
+          <img src="assets/myPhoto.jpg" style="width: 100%" />
+        </div>
+      </div>
+    </section>
+
     <!-- #region Вводная часть -->
 
     <section class="slide">
@@ -138,6 +145,12 @@
 
     <section class="slide">
       <h2 class="shout">Не те данные</h2>
+
+      <img
+        src="assets/notPanda.png"
+        alt="Собака как панда"
+        class="cover width"
+      />
     </section>
 
     <section class="slide">
@@ -146,10 +159,18 @@
 
     <section class="slide">
       <h2 class="shout">Id разных сущностей</h2>
+
+      <img
+        src="assets/notTheSame.png"
+        alt="Не одинаковые"
+        class="cover height"
+      />
     </section>
 
     <section class="slide">
       <h2 class="shout">Пустая строка</h2>
+
+      <img src="assets/emptyBook.png" alt="Пустая книга" class="cover height" />
     </section>
 
     <section class="slide">
@@ -167,7 +188,7 @@
     <!-- #endregion -->
 
     <section class="slide">
-      <h2 class="shout">Быстрый экскурс</h2>
+      <h2 class="shout">Быстрый экскурс в&nbsp;основы</h2>
     </section>
 
     <!-- #region Переменные, generic, Условные типы, шаблоны и infer -->
@@ -222,8 +243,29 @@
       <h2 class="shout">Generic === Функция</h2>
     </section>
 
-    <section class="slide">
-      <h2 class="shout">ВОЗМОЖНО СЛАЙД ПРО ПРЕДЫДУЩИЙ ДОКЛАД</h2>
+    <section
+      class="slide"
+      style="
+        background: url('/assets/fc24-title.png') no-repeat center center /
+          contain;
+      "
+    >
+      <div class="columns two">
+        <h2 style="color: #000; font-size: 70px; font-weight: 700">
+          Система типов TypeScript как язык программирования
+        </h2>
+
+        <img
+          src="assets/sourceQr.png"
+          alt="QR-код на слайды"
+          style="align-self: center; justify-self: flex-end"
+        />
+      </div>
+      <a
+        href="https://i-oktav-i.github.io/fc2024-typescript-as-program-language/"
+        class="copyright"
+        >Слайды</a
+      >
     </section>
 
     <section class="slide">
@@ -544,6 +586,12 @@
       </code></pre>
     </section>
 
+    <section class="slide">
+      <h2 class="shout">Это база</h2>
+
+      <img src="assets/base.png" alt="Это База" class="cover width" />
+    </section>
+
     <!-- #endregion -->
 
     <!-- #region Не пустая стока -->
@@ -669,6 +717,12 @@
 
     <section class="slide">
       <h2 class="shout">Путаница в&nbsp;данных</h2>
+
+      <img
+        src="assets/spiderMen.png"
+        alt="Показывают пальцем друг на друга"
+        class="cover width height"
+      />
     </section>
 
     <section class="slide">
@@ -888,6 +942,16 @@
       <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Type</span> = {<span class="hljs-comment">/* ... */</span>};
  
 <span class="hljs-keyword">type</span> <span class="hljs-title class_">MappedType</span> = {
+  <span class="border-red">+</span><span class="hljs-keyword">readonly</span> [<span class="hljs-title class_">Key</span> <span class="hljs-keyword">in</span> keyof <span class="hljs-title class_">Type</span>]<span class="border-red">+</span>?: <span class="hljs-title class_">Type</span>[<span class="hljs-title class_">Key</span>];
+}
+      </code></pre>
+    </section>
+
+    <section class="slide">
+      <h2>Mapped types</h2>
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Type</span> = {<span class="hljs-comment">/* ... */</span>};
+ 
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">MappedType</span> = {
   <span class="border-red">-</span><span class="hljs-keyword">readonly</span> [<span class="hljs-title class_">Key</span> <span class="hljs-keyword">in</span> keyof <span class="hljs-title class_">Type</span>]<span class="border-red">-</span>?: <span class="hljs-title class_">Type</span>[<span class="hljs-title class_">Key</span>];
 }
       </code></pre>
@@ -1024,12 +1088,5 @@
     <div class="progress"></div>
 
     <script src="shower/shower.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
-    <script>
-      hljs.highlightAll();
-    </script>
   </body>
 </html>
