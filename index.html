@@ -314,7 +314,7 @@
 
     <section class="slide">
       <h2>Условные типы</h2>
-      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">ToArray</span>&lt;T&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">any</span>[]
+      <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">ToArray</span>&lt;T&gt; = <span class="next border-red">T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">any</span>[]</span>
   ? T
   : T[];
 
@@ -495,7 +495,7 @@
     <section class="slide">
       <h2>Можно использовать как супертип</h2>
 
-      <pre><code class="language-typescript hljs" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">IsGreeting</span>&lt;T&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-string">`Hello <span class="hljs-subst">${<span class="hljs-built_in">string</span>}</span>!`</span>
+      <pre><code class="language-typescript hljs" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">IsGreeting</span>&lt;T&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-string border-red">`Hello <span class="hljs-subst">${<span class="hljs-built_in">string</span>}</span>!`</span>
   ? <span class="hljs-literal">true</span>
   : <span class="hljs-literal">false</span>;
       </code></pre>
@@ -575,7 +575,7 @@
       : never;
       </code></pre> -->
 
-      <pre><code class="language-typescript font-size-24 hljs" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Greet</span> = <span class="hljs-string">'Hello world!'</span> <span class="hljs-keyword">extends</span> <span class="hljs-string">`Hello <span class="hljs-subst">${infer U}</span>!`</span>
+      <pre><code class="language-typescript font-size-24 hljs" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Greet</span> = <span class="hljs-string">'Hello world!'</span> <span class="hljs-keyword">extends</span> <span class="hljs-string">`Hello <span class="hljs-subst border-red">${infer U}</span>!`</span>
   ? U
   : <span class="hljs-built_in">never</span>;
 
@@ -664,7 +664,7 @@
     <section class="slide">
       <h2>Непустая строка</h2>
       <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">const</span> <span class="hljs-title function_">process</span> = (<span class="hljs-params">someImportantId: <span class="hljs-built_in">string</span></span>) =&gt; {
-  <span class="hljs-keyword">if</span> (!someImportantId) <span class="hljs-keyword">return</span>;
+  <span class="border-red"><span class="hljs-keyword">if</span> (!someImportantId) <span class="hljs-keyword">return</span>;</span>
 
   <span class="hljs-title function_">sendMetrics</span>(<span class="codeError">someImportantId</span>);
   <span class="hljs-comment">//          ^^^^^^^^^^^^^^^^ Несовместимые типы</span>
@@ -686,7 +686,7 @@
         class="font-size-20"
       ><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">const</span> isNotEmptyString = (
   <span class="hljs-attr">value</span>: <span class="hljs-built_in">string</span>
-): value is <span class="hljs-title class_">NotEmptyString</span> =&gt; !!value;
+): <span class="border-red">value is <span class="hljs-title class_">NotEmptyString</span></span> =&gt; !!value;
       </code></pre>
     </section>
 
@@ -695,7 +695,7 @@
       <pre
         class="font-size-20"
       ><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">const</span> <span class="hljs-title function_">process</span> = (<span class="hljs-params">someImportantId: <span class="hljs-built_in">string</span></span>) =&gt; {
-  <span class="hljs-keyword">if</span> (!<span class="hljs-title function_">isNotEmptyString</span>(someImportantId)) <span class="hljs-keyword">return</span>;
+  <span class="border-red"><span class="hljs-keyword">if</span> (!<span class="hljs-title function_">isNotEmptyString</span>(someImportantId)) <span class="hljs-keyword">return</span>;</span>
 
   <span class="hljs-title function_">sendMetrics</span>(someImportantId);
 };</code></pre>
@@ -792,7 +792,7 @@
       <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">declare</span> <span class="hljs-keyword">const</span> <span class="hljs-attr">kilometersBrand</span>: unique <span class="hljs-built_in">symbol</span>;
 
 <span class="hljs-keyword">type</span> <span class="hljs-title class_">Kilometers</span> = <span class="hljs-built_in">number</span> &amp; {
-  [kilometersBrand]: <span class="hljs-built_in">never</span>;
+  <span class="border-red">[kilometersBrand]: <span class="hljs-built_in">never</span>;</span>
 };</code></pre>
     </section>
 
@@ -801,13 +801,13 @@
       <pre
         class="font-size-22"
       ><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Brand</span>&lt;
-  <span class="hljs-title class_">TType</span>,
-  <span class="hljs-title class_">TBrand</span> <span class="hljs-keyword">extends</span> <span class="hljs-built_in">symbol</span>
-&gt; = <span class="hljs-title class_">TBrand</span> &amp; { [key <span class="hljs-keyword">in</span> <span class="hljs-title class_">TBrand</span>]: <span class="hljs-built_in">never</span> };
+  <span class="next border-red"><span class="hljs-title class_">TType</span>,</span>
+  <span class="next border-red"><span class="hljs-title class_">TBrand</span> <span class="hljs-keyword">extends</span> <span class="hljs-built_in">symbol</span></span>
+&gt; = <span class="next border-red"><span class="hljs-title class_">TBrand</span> &amp; { [key <span class="hljs-keyword">in</span> <span class="hljs-title class_">TBrand</span>]: <span class="hljs-built_in">never</span> };</span>
 
 <span class="hljs-keyword">type</span> <span class="hljs-title class_">BrandedNumber</span>&lt;
-  <span class="hljs-title class_">TBrand</span> <span class="hljs-keyword">extends</span> <span class="hljs-built_in">symbol</span>
-&gt; = <span class="hljs-title class_">Brand</span>&lt;<span class="hljs-built_in">number</span>, <span class="hljs-title class_">TBrand</span>&gt;;
+  <span class="next border-red"><span class="hljs-title class_">TBrand</span> <span class="hljs-keyword">extends</span> <span class="hljs-built_in">symbol</span></span>
+&gt; = <span class="next border-red"><span class="hljs-title class_">Brand</span>&lt;<span class="hljs-built_in">number</span>, <span class="hljs-title class_">TBrand</span>&gt;;</span>
       </code></pre>
     </section>
 
@@ -841,7 +841,7 @@
       <pre><code class="hljs language-typescript" data-highlighted="yes"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Meters</span> = <span class="hljs-title class_">BrandedNumber</span>&lt;<span class="hljs-keyword">typeof</span> metersBrand&gt;;
 <span class="hljs-keyword">type</span> <span class="hljs-title class_">Radius</span> = <span class="hljs-title class_">BrandedNumber</span>&lt;<span class="hljs-keyword">typeof</span> radiusBrand&gt;;
 
-<span class="hljs-keyword">const</span> <span class="hljs-title function_">circleSquare</span> = (<span class="hljs-params">radius: Radius &amp; Meters</span>) =&gt;
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">circleSquare</span> = (<span class="hljs-params">radius: <span class="border-red">Radius &amp; Meters</span></span>) =&gt;
   <span class="hljs-title class_">Math</span>.<span class="hljs-property">PI</span> * radius ** <span class="hljs-number">2</span>;
 </code></pre>
     </section>
@@ -1014,7 +1014,7 @@
 
     <section class="slide">
       <h2 class="shout">
-        А зачем <span class="hljs-title class_">ProcessedPart</span>
+        А зачем <span class="hljs-title class_">ProcessedPart</span>?
       </h2>
     </section>
 
